@@ -55,9 +55,9 @@ contract TransientContextTest is Test {
     function testFuzz_get_succeeds(bytes32 _slot, uint256 _value) public {
         assertEq(TransientContext.get(_slot), 0);
 
-        bytes32 tSlot = keccak256(abi.encodePacked(TransientContext.callDepth(), _slot));
+        bytes32 tslot = keccak256(abi.encodePacked(TransientContext.callDepth(), _slot));
         assembly ("memory-safe") {
-            tstore(tSlot, _value)
+            tstore(tslot, _value)
         }
 
         assertEq(TransientContext.get(_slot), _value);
@@ -68,12 +68,12 @@ contract TransientContextTest is Test {
     /// @param _value Value to test.
     function testFuzz_set_succeeds(bytes32 _slot, uint256 _value) public {
         TransientContext.set(_slot, _value);
-        bytes32 tSlot = keccak256(abi.encodePacked(TransientContext.callDepth(), _slot));
-        uint256 tValue;
+        bytes32 tslot = keccak256(abi.encodePacked(TransientContext.callDepth(), _slot));
+        uint256 tvalue;
         assembly ("memory-safe") {
-            tValue := tload(tSlot)
+            tvalue := tload(tslot)
         }
-        assertEq(tValue, _value);
+        assertEq(tvalue, _value);
     }
 
     /// @notice Tests that `set()` and `get()` work together.
