@@ -34,5 +34,3 @@ import {TransientContext, TransientReentrancyAware} from "transience/src/Transie
 ## Contribute & Feedback
 
 Feel free to raise an issue, suggest a feature, or even fork the repository for personal tweaks. If you'd like to contribute, please fork the repository and make changes as you'd like. Pull requests are warmly welcome.
-
-For questions and feedback, you can also reach out via [Twitter](https://twitter.com/0xfuturistic).
