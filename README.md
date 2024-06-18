@@ -1,4 +1,4 @@
-# ✨ Transience
+# ✨ Transience: A library for transient storage management
 
 Transience is a Solidity library for safely managing transient storage in smart contracts. It stores values in a context-specific way (by call depth), preventing reentrancy attacks and ensuring secure and isolated storage across nested function calls.
 
@@ -6,7 +6,7 @@ Transience is a Solidity library for safely managing transient storage in smart 
 
 - **Transient Storage**: Transience offers methods for writing and reading transient storage without having to use assembly/Yul.
 
-- **Reentrancy Awareness**: Transience keeps track of the current call depth, preventing a nested function call from overwriting the transient storage of the parent call (i.e., a reentrancy attack).
+- **Reentrancy Awareness**: Transience keeps track of the current call depth, preventing a reentrant function call from overwriting transient storage.
 
 ## How It Works
 
