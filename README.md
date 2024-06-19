@@ -30,7 +30,7 @@ forge install ethereum-optimism/transience
 import {TransientContext, TransientReentrancyAware} from "transience/src/TransientContext.sol";
 ```
 3. Inherit from `TransientReentrancyAware` to access the `reentrantAware` modifier
-4. Use the `get()` and `set()` functions to store and retrieve values in the transient storage
+4. Use `get(bytes32 _slot)` and `set(bytes32 _slot, uint256 _value)` to retrieve and set values in transient storage
 
 ## Contribute & Feedback
 
