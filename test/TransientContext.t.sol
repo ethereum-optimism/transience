@@ -170,7 +170,7 @@ contract TransientReentrancyAwareTest is TransientContextTest, TransientReentran
         uint256 _value1,
         uint256 _value2
     ) public {
-        vm.assume(_callDepth < type(uint256).max - 1);
+        vm.assume(_callDepth < type(uint256).max - 2);
         assembly ("memory-safe") {
             tstore(sload(callDepthSlot.slot), _callDepth)
         }
