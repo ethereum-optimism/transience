@@ -68,7 +68,6 @@ contract TransientContextBytesTest is Test {
     /// @param _value Value to test.
     function testFuzz_set_succeeds(bytes32 _slot, bytes calldata _value) public {
         TransientContextBytes.set(_slot, _value);
-        bytes32 tslot = keccak256(abi.encodePacked(TransientContextBytes.callDepth(), _slot));
         bytes memory tvalue = TransientContextBytes.get(_slot);
         assertEq(tvalue, _value);
     }

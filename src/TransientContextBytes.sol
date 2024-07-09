@@ -71,13 +71,13 @@ library TransientContextBytes {
                 revert(0x1c, 0x04)
             }
 
-            // Store first word packed with length
-            let _valueStart := add(_value, 0x20)
-            let head := mload(sub(_valueStart, LENGTH_BYTES))
-
             mstore(0, tload(CALL_DEPTH_SLOT))
             mstore(32, _slot)
             let slot := keccak256(0, 64)
+
+            // Store first word packed with length
+            let valueStart := add(_value, 0x20)
+            let head := mload(sub(valueStart, LENGTH_BYTES))
 
             tstore(slot, head)
 
@@ -87,9 +87,9 @@ library TransientContextBytes {
                 slot := keccak256(0x00, 0x20)
 
                 // Store remainder.
-                let offset := add(_valueStart, sub(0x20, LENGTH_BYTES))
+                let offset := add(valueStart, sub(0x20, LENGTH_BYTES))
                 // Ensure each loop can do cheap comparison to see if it's at the end.
-                let endOffset := sub(add(_valueStart, len), 1)
+                let endOffset := sub(add(valueStart, len), 1)
                 for {} 1 {} {
                     tstore(slot, mload(offset))
                     offset := add(offset, 0x20)
