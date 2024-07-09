@@ -6,18 +6,14 @@ pragma solidity ^0.8.24;
 /// @dev h/t to https://github.com/Philogy/transient-goodies/blob/main/src/TransientBytesLib.sol for assembly.
 library TransientContextBytes {
     error DataTooLarge();
-    error OutOfOrderSlots();
-    error RangeTooLarge();
-
-    /// @dev 4-bytes is way above current max contract size, meant to account for future EVM
-    /// versions.
-    uint256 internal constant LENGTH_MASK = 0xffffffff;
-    uint256 internal constant MAX_LENGTH = LENGTH_MASK;
-    uint256 internal constant LENGTH_BYTES = 4;
 
     /// @notice Slot for call depth.
     ///         Equal to bytes32(uint256(keccak256("transient.calldepth")) - 1).
     bytes32 internal constant CALL_DEPTH_SLOT = 0x7a74fd168763fd280eaec3bcd2fd62d0e795027adc8183a693c497a7c2b10b5c;
+    /// @dev 4-bytes is way above current max contract size, meant to account for future EVM
+    /// versions.
+    uint256 internal constant LENGTH_MASK = 0xffffffff;
+    uint256 internal constant LENGTH_BYTES = 4;
 
     /// @notice Gets the call depth.
     /// @return callDepth_ Current call depth.
