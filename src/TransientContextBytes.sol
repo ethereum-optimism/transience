@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 /// @title TransientContextBytes
 /// @notice Library for transient storage.
+/// @dev h/t to https://github.com/Philogy/transient-goodies/blob/main/src/TransientBytesLib.sol for assembly.
 library TransientContextBytes {
     error DataTooLarge();
     error OutOfOrderSlots();
