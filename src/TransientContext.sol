@@ -8,6 +8,19 @@ library TransientContext {
     ///         Equal to bytes32(uint256(keccak256("transient.calldepth")) - 1).
     bytes32 internal constant CALL_DEPTH_SLOT = 0x7a74fd168763fd280eaec3bcd2fd62d0e795027adc8183a693c497a7c2b10b5c;
 
+    /// @notice Reentrancy modifier that gives inheritance flexibility automatically.
+    ///         bytes32 key is used to create separate locks, which do not interfere with each other to ensure atomic access.
+    modifier nonreentrant(bytes32 key) {
+        assembly {
+            if tload(key) { revert(0, 0) }
+            tstore(key, 1)
+        }
+        _;
+        assembly {
+            tstore(key, 0)
+        }
+    }
+
     /// @notice Gets the call depth.
     /// @return callDepth_ Current call depth.
     function callDepth() internal view returns (uint256 callDepth_) {
