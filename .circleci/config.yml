@@ -1,0 +1,43 @@
+version: 2.1
+
+
+parameters:
+  workflow_trigger:
+    type: string
+    default: "push"
+
+executors:
+  default:
+    docker:
+      - image: us-docker.pkg.dev/oplabs-tools-artifacts/images/ci-builder:v0.47.3
+
+jobs:
+  foundry-check:
+    executor: default
+    environment:
+      FOUNDRY_PROFILE: ci
+    steps:
+      - checkout
+
+      # Run Forge build (equivalent to the GitHub Action's forge build step)
+      - run:
+          name: Run Forge build
+          command: |
+            forge --version
+            forge build --sizes
+
+      # Run Forge tests (equivalent to the GitHub Action's forge test step)
+      - run:
+          name: Run Forge tests
+          command: |
+            forge test -vvv
+
+workflows:
+  version: 2
+  foundry-workflow:
+    jobs:
+      - foundry-check:
+          filters:
+            branches:
+              only:
+                - main
