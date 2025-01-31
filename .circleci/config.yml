@@ -52,8 +52,9 @@ workflows:
   version: 2
   foundry-workflow:
     jobs:
-      - foundry-check:
-          filters:
-            branches:
-              only:
-                - main
+      - foundry-check
+      # - foundry-check:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
