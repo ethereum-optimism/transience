@@ -1,0 +1,59 @@
+version: 2.1
+
+# Optional: Define when to trigger the pipeline
+# Similar to GitHub's workflow_dispatch and push triggers
+parameters:
+  workflow_trigger:
+    type: string
+    default: "push"
+
+jobs:
+  foundry-check:
+    docker:
+      - image: ubuntu:latest
+    environment:
+      FOUNDRY_PROFILE: ci
+    steps:
+      - checkout
+
+      # Get submodules (equivalent to actions/checkout with submodules)
+      - run:
+          name: Update Git submodules
+          command: |
+            apt-get update
+            apt-get install -y git
+            git submodule update --init --recursive
+
+      # Install Foundry (equivalent to foundry-rs/foundry-toolchain action)
+      - run:
+          name: Install Foundry
+          command: |
+            apt-get install -y curl
+            curl -L https://foundry.paradigm.xyz | bash
+            export PATH="$PATH:/root/.foundry/bin"
+            foundryup --version nightly
+
+      # Run Forge build (equivalent to the GitHub Action's forge build step)
+      - run:
+          name: Run Forge build
+          command: |
+            export PATH="$PATH:/root/.foundry/bin"
+            forge --version
+            forge build --sizes
+
+      # Run Forge tests (equivalent to the GitHub Action's forge test step)
+      - run:
+          name: Run Forge tests
+          command: |
+            export PATH="$PATH:/root/.foundry/bin"
+            forge test -vvv
+
+workflows:
+  version: 2
+  foundry-workflow:
+    jobs:
+      - foundry-check:
+          filters:
+            branches:
+              only:
+                - main
